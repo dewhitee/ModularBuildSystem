@@ -407,7 +407,10 @@ FModularSectionActor AModularBuildSystemActor::InitModularSectionActor(const FTr
 	FModularSectionActor NewSectionActor = FModularSectionActor(
 		InLevelId, Sections.SpawnNewSectionActor(InTransform, InClass, SpawnConfiguration.SectionSpawnParams));
 
-	checkf(NewSectionActor.IsValid(), TEXT("%s: NewSectionActor was invalid: %s"), *GetName(), *NewSectionActor.ToString());
+	checkf(NewSectionActor.IsValid(), TEXT("%s: NewSectionActor was invalid: %s, InClass=%s, bAddToActorSections=%s, bWithRelativeTransform=%s"), 
+		*GetName(), *NewSectionActor.ToString(), *InClass->GetName(),
+		bAddToActorSections ? TEXT("true") : TEXT("false"),
+		bWithRelativeTransform ? TEXT("true") : TEXT("false"));
 	AttachActor(NewSectionActor.GetActor(), bWithRelativeTransform);
 
 	if (bAddToActorSections)
