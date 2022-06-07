@@ -177,8 +177,7 @@ void FModularSection::SetPivot(FVector PivotOffset, int32 Index)
 
 FString FModularSection::GetName() const
 {
-	check(StaticMesh);
-	return StaticMesh->GetName();
+	return StaticMesh ? StaticMesh->GetName() : FName().ToString();
 }
 
 FVector FModularSection::GetForwardVector(int32 Index) const
@@ -249,8 +248,7 @@ void FModularSectionActor::SetPivot(FVector PivotOffset, int32 Index)
 
 FString FModularSectionActor::GetName() const
 {
-	check(Actor);
-	return Actor->GetName();
+	return Actor ? Actor->GetName() : FName().ToString();
 }
 
 bool FModularSectionActor::IsValid() const
@@ -321,7 +319,7 @@ FString FModularSectionInstanced::GetSectionName(int32 AtIndex) const
 		return FString::Printf(TEXT("%s_%d"), *InstancedStaticMeshComponent->GetName(), AtIndex);
 	}
 	UE_LOG(LogModularSection, Error, TEXT("%s: InstancedStaticMeshComponent was nullptr on GetSectionName"), *GetName());
-	return {};
+	return FName().ToString();
 }
 
 bool FModularSectionInstanced::IsValid() const
