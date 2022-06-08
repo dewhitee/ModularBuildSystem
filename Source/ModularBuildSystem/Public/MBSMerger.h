@@ -36,7 +36,7 @@ struct MODULARBUILDSYSTEM_API FMBSMerger
 	
 #if WITH_EDITORONLY_DATA
 	UPROPERTY(EditInstanceOnly, Category=Merge)
-	bool bMergeActorSections = false;
+	bool bMergeActorSections = true;
 	
 	UPROPERTY(EditInstanceOnly, Category=Merge)
 	bool bSaveMergedIfUniqueOnly = true;

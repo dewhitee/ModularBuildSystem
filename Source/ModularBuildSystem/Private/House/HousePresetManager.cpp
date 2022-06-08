@@ -59,6 +59,7 @@ void UHousePresetManager::LoadPreset_Implementation()
 
 	if (Preset)
 	{
+		BS->ResetBuildSystem();
 		Preset->LoadProperties(BS.Get());
 		if (BS->Generator && IBuildingGeneratorInterface::Execute_Generate(BS->Generator).Succeeded())
 		{

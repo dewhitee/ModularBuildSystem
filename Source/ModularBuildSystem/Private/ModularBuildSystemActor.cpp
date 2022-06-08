@@ -76,9 +76,14 @@ void AModularBuildSystemActor::PostLoad()
 	UE_LOG(LogMBS, Log, TEXT("%s: PostLoad"), *GetName());
 	if (const UMBSSettings* Settings = GetDefault<UMBSSettings>())
 	{
-		this->MeshConfiguration.DefaultType = Settings->DefaultMeshConfigurationType;
-		this->SpawnConfiguration.DefaultClampMode = Settings->DefaultClampMode;
-		this->SpawnConfiguration.DefaultExecutionMode = Settings->DefaultExecutionMode;
+		MeshConfiguration.DefaultType = Settings->DefaultMeshConfigurationType;
+		MeshConfiguration.Type = MeshConfiguration.DefaultType;
+		
+		SpawnConfiguration.DefaultClampMode = Settings->DefaultClampMode;
+		SpawnConfiguration.ClampMode = SpawnConfiguration.DefaultClampMode;
+		
+		SpawnConfiguration.DefaultExecutionMode = Settings->DefaultExecutionMode;
+		SpawnConfiguration.ExecutionMode = SpawnConfiguration.DefaultExecutionMode;
 	}
 
 	Sections = {this};
@@ -92,9 +97,14 @@ void AModularBuildSystemActor::PostActorCreated()
 	UE_LOG(LogMBS, Log, TEXT("%s: PostActorCreated"), *GetName());
 	if (const UMBSSettings* Settings = GetDefault<UMBSSettings>())
 	{
-		this->MeshConfiguration.DefaultType = Settings->DefaultMeshConfigurationType;
-		this->SpawnConfiguration.DefaultClampMode = Settings->DefaultClampMode;
-		this->SpawnConfiguration.DefaultExecutionMode = Settings->DefaultExecutionMode;
+		MeshConfiguration.DefaultType = Settings->DefaultMeshConfigurationType;
+		MeshConfiguration.Type = MeshConfiguration.DefaultType;
+		
+		SpawnConfiguration.DefaultClampMode = Settings->DefaultClampMode;
+		SpawnConfiguration.ClampMode = SpawnConfiguration.DefaultClampMode;
+		
+		SpawnConfiguration.DefaultExecutionMode = Settings->DefaultExecutionMode;
+		SpawnConfiguration.ExecutionMode = SpawnConfiguration.DefaultExecutionMode;
 	}
 
 	Sections = {this};
@@ -517,9 +527,9 @@ void AModularBuildSystemActor::UnmergeIntoModularSections()
 	if (Merger.bIsMerged)
 	{
 		Merger.UnmergeIntoModularSections(this);
-		if (!Sections.IsAnyNotEmpty())
+		if (Sections.IsAnyNotEmpty())
 		{
-			UE_LOG(LogMBS, Log, TEXT("%s: Stretching"), *GetName());
+			UE_LOG(LogMBS, Verbose, TEXT("%s: Stretching"), *GetName());
 			TransformBounds.SetBounds(TransformBounds.GetBounds(), StretchManager.GetScaleCoefficientsSwappedXY());
 			ApplyStretch();
 		}
