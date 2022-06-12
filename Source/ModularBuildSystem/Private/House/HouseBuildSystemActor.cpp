@@ -126,6 +126,15 @@ void AHouseBuildSystemActor::PostEditChangeChainProperty(FPropertyChangedChainEv
 				{
 					GetInterior()->GenerateInterior(this);
 				}
+
+				// NEW. Is used to properly refresh Generator object details after CustomLevelShape is set.
+				// Currently there is a bug that prevents showing the custom level shape properties until it is set again manually.
+				const auto ExactProperty = PropertyChangedEvent.PropertyChain.GetTail()->GetValue();
+				if (ExactProperty->GetFName() == "CustomLevelShape")
+				{
+					FPropertyEditorModule& PropertyEditorModule = FModuleManager::GetModuleChecked<FPropertyEditorModule>("PropertyEditor");
+					PropertyEditorModule.NotifyCustomizationModuleChanged();
+				}
 			}
 		}
 
